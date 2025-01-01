@@ -7,7 +7,7 @@ def get_basic_path():
     获取 xz-generator-basic 所在路径
     :return:
     """
-    path = Path(__file__).parent.parent.absolute()
+    path = Path(__file__).parent.parent.parent.absolute()
     return path
 
 
@@ -16,7 +16,7 @@ def get_root_path():
     获取 xz-generator 所在路径
     :return:
     """
-    path = Path(__file__).parent.parent.parent.absolute()
+    path = Path(__file__).parent.parent.parent.parent.absolute()
     return path
 
 
