@@ -20,6 +20,11 @@ def get_root_path():
     return path
 
 
+def get_parent_path():
+    path = Path(__file__).parent.parent.absolute()
+    return path
+
+
 def find_file_by_name(folder_path, target_filename):
     """
     在指定文件夹及其子文件夹中寻找指定名字的文件
