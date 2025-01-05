@@ -4,7 +4,19 @@ import shutil
 
 from jinja2 import Environment, FileSystemLoader
 
-import utils
+
+def handle_temp_file(env, meta_data, dest_path, file_path):
+    template = env.get_template(file_path)
+
+    output = template.render(meta_data)
+    # 待处理文件的位置
+    g_path = os.path.join(dest_path, file_path)
+
+    # 删除模板文件
+    with open(g_path.replace('-tpl', ''), 'w', encoding='utf8') as f:
+        f.write(output)
+        os.remove(os.path.join(dest_path, file_path))
+
 
 def copy_content():
     with open('meta.json', 'r', encoding='utf8') as f:
@@ -27,15 +39,10 @@ def copy_content():
             print(f"复制文件夹时出错: {e}")
 
         # 替换模板内容
-        env = Environment(loader=FileSystemLoader(r'E:\project\xz-generator\xz-generator-maker\resource\commands'))
-        template = env.get_template('generate.py-tpl')
-        output = template.render(meta_data)
+        env = Environment(loader=FileSystemLoader('./resource'))
+        handle_temp_file(env, meta_data, dest_path, 'commands/generate.py-tpl')
+        handle_temp_file(env, meta_data, dest_path, 'README.md-tpl')
 
-        # generate.py的位置
-        g_path = os.path.join(dest_path, 'commands/generate.py')
-        with open(g_path, 'w', encoding='utf8') as f:
-            f.write(output)
-            os.remove(os.path.join(dest_path, 'commands/generate.py-tpl'))
 
 if __name__ == '__main__':
     copy_content()
